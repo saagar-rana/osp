@@ -1,0 +1,48 @@
+'Log files:
+/home/kripesh/Desktop/sus-project/osp/frontend/default/_logs/2023-08-04T16_10_33_974Z-debug-0.log
+
+# npm resolution error report
+
+While resolving: @material-ui/core@4.12.4
+Found: @types/react@18.2.15
+node_modules/@types/react
+  peerOptional @types/react@"*" from @material-ui/types@5.1.0
+  node_modules/@material-ui/types
+    @material-ui/types@"5.1.0" from @material-ui/core@4.12.4
+    node_modules/@material-ui/core
+      @material-ui/core@"^4.12.4" from the root project
+    @material-ui/types@"5.1.0" from @material-ui/styles@4.11.5
+    node_modules/@material-ui/styles
+      @material-ui/styles@"^4.11.5" from @material-ui/core@4.12.4
+      node_modules/@material-ui/core
+        @material-ui/core@"^4.12.4" from the root project
+  @types/react@"*" from @types/react-dom@18.2.7
+  node_modules/@types/react-dom
+    dev @types/react-dom@"^18.2.7" from the root project
+  @types/react@"*" from @types/react-transition-group@4.4.6
+  node_modules/@types/react-transition-group
+    @types/react-transition-group@"^4.2.0" from @material-ui/core@4.12.4
+    node_modules/@material-ui/core
+      @material-ui/core@"^4.12.4" from the root project
+    @types/react-transition-group@"^4.4.6" from @mui/material@5.14.3
+    node_modules/@mui/material
+      @mui/material@"*" from the root project
+  dev @types/react@"^18.2.15" from the root project
+  peerOptional @types/react@"^17.0.0 || ^18.0.0" from @mui/material@5.14.3
+  node_modules/@mui/material
+    @mui/material@"*" from the root project
+
+Could not resolve dependency:
+peerOptional @types/react@"^16.8.6 || ^17.0.0" from @material-ui/core@4.12.4
+node_modules/@material-ui/core
+  @material-ui/core@"^4.12.4" from the root project
+
+Conflicting peer dependency: @types/react@17.0.62
+node_modules/@types/react
+  peerOptional @types/react@"^16.8.6 || ^17.0.0" from @material-ui/core@4.12.4
+  node_modules/@material-ui/core
+    @material-ui/core@"^4.12.4" from the root project
+
+Fix the upstream dependency conflict, or retry
+this command with --force or --legacy-peer-deps
+to accept an incorrect (and potentially broken) dependency resolution.
