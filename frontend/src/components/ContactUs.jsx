@@ -67,7 +67,7 @@ function ContactUs() {
 
     try {
       const response = await axios.post(
-        "https://kamleshkd.pythonanywhere.com/api/keys/contact/",
+        "https://th1.thulo.com/api/keys/contact/",
         formData
       );
       console.log("Contact Form sent successfully:", response.data);
