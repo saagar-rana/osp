@@ -46,7 +46,7 @@ function CsvUpload() {
 
     axios
       .delete(
-        "https://osp.com.np/api/keys/delete_activation_keys/",
+        "https://th1.thulo.com/api/keys/delete_activation_keys/",
         {
           data: data,
         }
@@ -124,7 +124,7 @@ function CsvUpload() {
     };
     setLoadingAcKeyUpdate(true);
     axios
-      .put("https://osp.com.np/api/keys/edit-key/", data)
+      .put("https://th1.thulo.com/api/keys/edit-key/", data)
       .then((response) => {
         console.log(response);
         setAckresponse(response.data);
@@ -161,7 +161,7 @@ function CsvUpload() {
 
     axios
       .post(
-        "https://osp.com.np/api/keys/upload-csv/",
+        "https://th1.thulo.com/api/keys/upload-csv/",
         formData,
         {
           headers: {
@@ -194,7 +194,7 @@ function CsvUpload() {
     formData.append("file", ackfile);
     axios
       .post(
-        "https://osp.com.np/api/keys/upload-activation-keys/",
+        "https://th1.thulo.com/api/keys/upload-activation-keys/",
         formData,
         {
           headers: {
@@ -217,7 +217,7 @@ function CsvUpload() {
 
   const fetchRecentlyUsedKeys = () => {
     axios
-      .get("https://osp.com.np/api/keys/view_used_keys/")
+      .get("https://th1.thulo.com/api/keys/view_used_keys/")
       .then((response) => {
         setRecentlyUsedKeysResponse(response.data);
       })
@@ -228,7 +228,7 @@ function CsvUpload() {
 
   const fetchUnusedKeys = () => {
     axios
-      .get("https://osp.com.np/api/keys/view_unused_keys/")
+      .get("https://th1.thulo.com/api/keys/view_unused_keys/")
       .then((response) => {
         setUnusedKeysResponse(response.data);
       })
