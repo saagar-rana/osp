@@ -49,7 +49,7 @@ function Activation() {
   //   event.preventDefault();
   //   if (puzzleSolved) {
   //     axios
-  //       .post("https://osp.com.np/api/keys/get-activation-key/", {
+  //       .post("https://backend.osp.com.np/api/keys/get-activation-key/", {
   //         phone: phone,
   //         serial_key: serialNumber,
   //       })
@@ -77,7 +77,7 @@ function Activation() {
       setLoading(true);
       try {
         const response = await axios.post(
-          "https://osp.com.np/api/keys/get-activation-key/",
+          "https://backend.osp.com.np/api/keys/get-activation-key/",
           {
             phone: phone,
             // email: email,
