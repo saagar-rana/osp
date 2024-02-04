@@ -21,7 +21,7 @@ function AdminLogin() {
       setLoading(true);
       try {
         const response = await axios.post(
-          "https://th1.thulo.com/api/keys/login/",
+          "https://osp.com.np/api/keys/login/",
           {
             username: user,
             password: pswd,
@@ -100,8 +100,8 @@ function AdminLogin() {
               {loading ? "Logging In..." : "Login"}
             </Button>
             {loginError && (
-            <p style={{ color: "red", fontSize: "12px" }}>{loginError}</p>
-          )}
+              <p style={{ color: "red", fontSize: "12px" }}>{loginError}</p>
+            )}
           </form>
         </div>
       )}

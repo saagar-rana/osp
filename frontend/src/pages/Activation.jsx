@@ -21,7 +21,7 @@ function Activation() {
   const [loading, setLoading] = useState(false);
   const [isMessageSent, setIsMessageSent] = useState(false);
   const [apiResponseReceived, setApiResponseReceived] = useState(false);
-  const [formSubmissionError,setFormSubmissionError]=useState("");
+  const [formSubmissionError, setFormSubmissionError] = useState("");
   const [scrollToResponse, setScrollToResponse] = useState(false);
 
   const ackResponseRef = useRef(null);
@@ -34,11 +34,11 @@ function Activation() {
     const isMobileView = window.innerWidth <= 800;
     if (apiResponseReceived && ackResponseRef.current) {
       if (scrollToResponse && !isMobileView) {
-      ackResponseRef.current.scrollIntoView({ behavior: "smooth" });
-      setScrollToResponse(false);
+        ackResponseRef.current.scrollIntoView({ behavior: "smooth" });
+        setScrollToResponse(false);
       }
     }
-  }, [apiResponseReceived,scrollToResponse]);
+  }, [apiResponseReceived, scrollToResponse]);
 
   const handlePuzzleSolved = () => {
     setPuzzleSolved(true);
@@ -49,7 +49,7 @@ function Activation() {
   //   event.preventDefault();
   //   if (puzzleSolved) {
   //     axios
-  //       .post("https://th1.thulo.com/api/keys/get-activation-key/", {
+  //       .post("https://osp.com.np/api/keys/get-activation-key/", {
   //         phone: phone,
   //         serial_key: serialNumber,
   //       })
@@ -77,7 +77,7 @@ function Activation() {
       setLoading(true);
       try {
         const response = await axios.post(
-          "https://th1.thulo.com/api/keys/get-activation-key/",
+          "https://osp.com.np/api/keys/get-activation-key/",
           {
             phone: phone,
             // email: email,
@@ -112,10 +112,10 @@ function Activation() {
     }
   }
 
-  const handlePhoneChange =(e) =>{
+  const handlePhoneChange = (e) => {
     setPhone(e.target.value);
     setIsMessageSent(false);
-  }
+  };
 
   const handleCaptchaCheckboxChange = () => {
     setCaptchaChecked(!captchaChecked);
@@ -235,7 +235,9 @@ function Activation() {
                 />
                 <label className="ml-2">I'm not a robot (Captcha)</label>
                 {captchaError && (
-                  <p style={{ color: "red", fontSize: "12px" }}>{captchaError}</p>
+                  <p style={{ color: "red", fontSize: "12px" }}>
+                    {captchaError}
+                  </p>
                 )}
               </div>
               <button
@@ -271,8 +273,10 @@ function Activation() {
                 )}
               </button>
               {formSubmissionError && (
-                  <p style={{ color: "red", fontSize: "12px" }}>{formSubmissionError}</p>
-                )}
+                <p style={{ color: "red", fontSize: "12px" }}>
+                  {formSubmissionError}
+                </p>
+              )}
             </form>
           </div>
         </div>
@@ -348,7 +352,8 @@ function Activation() {
               <div className="flex-col sm:max-md:items-center sm:max-md:justify-center">
                 <p className="font-semibold  sm:max-md:flex sm:max-md:items-center sm:max-md:justify-center">
                   {" "}
-                  {ackresponse.message}<br/>
+                  {ackresponse.message}
+                  <br />
                   Please contact us at 9801340008
                 </p>
               </div>

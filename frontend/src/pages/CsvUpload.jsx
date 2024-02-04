@@ -20,7 +20,8 @@ function CsvUpload() {
   const [loadingDeleteKey, setLoadingDeleteKey] = useState(false);
   const [deleteKeyResponse, setDeleteKeyResponse] = useState("");
   const [deleteKeyError, setDeleteKeyError] = useState("");
-  const [recentlyUsedKeysResponse, setRecentlyUsedKeysResponse] = useState(null);
+  const [recentlyUsedKeysResponse, setRecentlyUsedKeysResponse] =
+    useState(null);
   const [unusedKeysResponse, setUnusedKeysResponse] = useState(null);
 
   const handleDeleteKeyChange = (event) => {
@@ -45,12 +46,9 @@ function CsvUpload() {
     };
 
     axios
-      .delete(
-        "https://th1.thulo.com/api/keys/delete_activation_keys/",
-        {
-          data: data,
-        }
-      )
+      .delete("https://osp.com.np/api/keys/delete_activation_keys/", {
+        data: data,
+      })
       .then((response) => {
         console.log(response);
         setDeleteKeyResponse("Activation key deleted successfully.");
@@ -124,7 +122,7 @@ function CsvUpload() {
     };
     setLoadingAcKeyUpdate(true);
     axios
-      .put("https://th1.thulo.com/api/keys/edit-key/", data)
+      .put("https://osp.com.np/api/keys/edit-key/", data)
       .then((response) => {
         console.log(response);
         setAckresponse(response.data);
@@ -160,15 +158,11 @@ function CsvUpload() {
     formData.append("category", selectedCategory);
 
     axios
-      .post(
-        "https://th1.thulo.com/api/keys/upload-csv/",
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      )
+      .post("https://osp.com.np/api/keys/upload-csv/", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
       .then((response) => {
         alert("File sent successfully!");
         console.log(response);
@@ -193,15 +187,11 @@ function CsvUpload() {
     const formData = new FormData();
     formData.append("file", ackfile);
     axios
-      .post(
-        "https://th1.thulo.com/api/keys/upload-activation-keys/",
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      )
+      .post("https://osp.com.np/api/keys/upload-activation-keys/", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
       .then((response) => {
         alert("File sent successfully!");
         console.log(response);
@@ -217,7 +207,7 @@ function CsvUpload() {
 
   const fetchRecentlyUsedKeys = () => {
     axios
-      .get("https://th1.thulo.com/api/keys/view_used_keys/")
+      .get("https://osp.com.np/api/keys/view_used_keys/")
       .then((response) => {
         setRecentlyUsedKeysResponse(response.data);
       })
@@ -228,7 +218,7 @@ function CsvUpload() {
 
   const fetchUnusedKeys = () => {
     axios
-      .get("https://th1.thulo.com/api/keys/view_unused_keys/")
+      .get("https://osp.com.np/api/keys/view_unused_keys/")
       .then((response) => {
         setUnusedKeysResponse(response.data);
       })
@@ -459,63 +449,63 @@ function CsvUpload() {
         </Button>
 
         {recentlyUsedKeysResponse && (
-         <div className="mt-8">
-          <h2 className="font-bold text-2xl">Recently Used Keys:</h2>
-         <table className="w-full mt-4 border-collapse border border-gray-400">
-           <thead>
-             <tr>
-               <th className="border border-gray-400 p-2">Activation Key</th>
-               <th className="border border-gray-400 p-2">Category</th>
-               <th className="border border-gray-400 p-2">Expiry Date</th>
-             </tr>
-           </thead>
-           <tbody>
-             {recentlyUsedKeysResponse.map((keyData) => (
-               <tr key={keyData.activation_key}>
-                 <td className="border border-gray-400 p-2">
-                   {keyData.activation_key}
-                 </td>
-                 <td className="border border-gray-400 p-2">
-                   {keyData.category}
-                 </td>
-                 <td className="border border-gray-400 p-2">
-                   {keyData.expiry_date}
-                 </td>
-               </tr>
-             ))}
-           </tbody>
-         </table>
-       </div>
+          <div className="mt-8">
+            <h2 className="font-bold text-2xl">Recently Used Keys:</h2>
+            <table className="w-full mt-4 border-collapse border border-gray-400">
+              <thead>
+                <tr>
+                  <th className="border border-gray-400 p-2">Activation Key</th>
+                  <th className="border border-gray-400 p-2">Category</th>
+                  <th className="border border-gray-400 p-2">Expiry Date</th>
+                </tr>
+              </thead>
+              <tbody>
+                {recentlyUsedKeysResponse.map((keyData) => (
+                  <tr key={keyData.activation_key}>
+                    <td className="border border-gray-400 p-2">
+                      {keyData.activation_key}
+                    </td>
+                    <td className="border border-gray-400 p-2">
+                      {keyData.category}
+                    </td>
+                    <td className="border border-gray-400 p-2">
+                      {keyData.expiry_date}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         )}
 
         {unusedKeysResponse && (
-         <div className="mt-8">
-          <h2 className="font-bold text-2xl">Unused Keys:</h2>
-         <table className="w-full mt-4 border-collapse border border-gray-400">
-           <thead>
-             <tr>
-               <th className="border border-gray-400 p-2">Activation Key</th>
-               <th className="border border-gray-400 p-2">Category</th>
-               <th className="border border-gray-400 p-2">Expiry Date</th>
-             </tr>
-           </thead>
-           <tbody>
-             {unusedKeysResponse.map((keyData) => (
-               <tr key={keyData.activation_key}>
-                 <td className="border border-gray-400 p-2">
-                   {keyData.activation_key}
-                 </td>
-                 <td className="border border-gray-400 p-2">
-                   {keyData.category}
-                 </td>
-                 <td className="border border-gray-400 p-2">
-                   {keyData.expiry_date}
-                 </td>
-               </tr>
-             ))}
-           </tbody>
-         </table>
-       </div>
+          <div className="mt-8">
+            <h2 className="font-bold text-2xl">Unused Keys:</h2>
+            <table className="w-full mt-4 border-collapse border border-gray-400">
+              <thead>
+                <tr>
+                  <th className="border border-gray-400 p-2">Activation Key</th>
+                  <th className="border border-gray-400 p-2">Category</th>
+                  <th className="border border-gray-400 p-2">Expiry Date</th>
+                </tr>
+              </thead>
+              <tbody>
+                {unusedKeysResponse.map((keyData) => (
+                  <tr key={keyData.activation_key}>
+                    <td className="border border-gray-400 p-2">
+                      {keyData.activation_key}
+                    </td>
+                    <td className="border border-gray-400 p-2">
+                      {keyData.category}
+                    </td>
+                    <td className="border border-gray-400 p-2">
+                      {keyData.expiry_date}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         )}
       </div>
       {ackresponse && (

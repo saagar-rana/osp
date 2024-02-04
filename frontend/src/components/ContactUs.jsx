@@ -67,7 +67,7 @@ function ContactUs() {
 
     try {
       const response = await axios.post(
-        "https://th1.thulo.com/api/keys/contact/",
+        "https://osp.com.np/api/keys/contact/",
         formData
       );
       console.log("Contact Form sent successfully:", response.data);
@@ -98,7 +98,7 @@ function ContactUs() {
           <div className="flex items-center mt-4 ml-2">
             <AiOutlineMobile className="mr-2 " />
             <a href="tel:9822777101" className="text-gray-600 text-xs">
-            9822777101, 9822777102
+              9822777101, 9822777102
             </a>
           </div>
           <div className="flex items-center mt-4 ml-2">
@@ -160,9 +160,7 @@ function ContactUs() {
             <button
               type="submit"
               className={`w-full bg-[#9271af] hover:bg-[#FDA216] text-white font-bold py-2 px-4 rounded-md`}
-              disabled={
-                loading
-              }
+              disabled={loading}
             >
               {loading ? (
                 <svg
