@@ -16967,7 +16967,7 @@ function K5() {
       A(!0);
       try {
         const ce = await cr.post(
-          "https://backend.osp.com.np/api/keys/get-activation-key/",
+          "https://osp.com.np/api/keys/get-activation-key/",
           { phone: a, serial_key: d }
         );
         console.log(ce),
@@ -17456,10 +17456,7 @@ function Z5() {
       }
       r(!0);
       try {
-        const f = await cr.post(
-          "https://backend.osp.com.np/api/keys/contact/",
-          m
-        );
+        const f = await cr.post("https://osp.com.np/api/keys/contact/", m);
         console.log("Contact Form sent successfully:", f.data),
           i(!0),
           x({ name: "", sender_email: "", msz: "" });
@@ -18175,7 +18172,7 @@ function uw() {
       const T = { activation_key: a, category: l, phone: d, serial_key: m };
       v(!0),
         cr
-          .put("https://backend.osp.com.np/api/keys/edit-key/", T)
+          .put("https://osp.com.np/api/keys/edit-key/", T)
           .then((M) => {
             console.log(M), P(M.data);
           })
@@ -18203,7 +18200,7 @@ function uw() {
       T.append("file", e),
         T.append("category", o),
         cr
-          .post("https://backend.osp.com.np/api/keys/upload-csv/", T, {
+          .post("https://osp.com.np/api/keys/upload-csv/", T, {
             headers: { "Content-Type": "multipart/form-data" },
           })
           .then((M) => {
@@ -18225,13 +18222,9 @@ function uw() {
       const T = new FormData();
       T.append("file", n),
         cr
-          .post(
-            "https://backend.osp.com.np/api/keys/upload-activation-keys/",
-            T,
-            {
-              headers: { "Content-Type": "multipart/form-data" },
-            }
-          )
+          .post("https://osp.com.np/api/keys/upload-activation-keys/", T, {
+            headers: { "Content-Type": "multipart/form-data" },
+          })
           .then((M) => {
             alert("File sent successfully!"), console.log(M);
           })
@@ -18654,7 +18647,7 @@ function xw() {
     if ((y.preventDefault(), e && n)) {
       i(!0);
       try {
-        const g = await cr.post("https://backend.osp.com.np/api/keys/login/", {
+        const g = await cr.post("https://osp.com.np/api/keys/login/", {
           username: e,
           password: n,
         });

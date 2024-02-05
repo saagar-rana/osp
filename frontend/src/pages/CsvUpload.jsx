@@ -46,7 +46,7 @@ function CsvUpload() {
     };
 
     axios
-      .delete("https://backend.osp.com.np/api/keys/delete_activation_keys/", {
+      .delete("https://osp.com.np/api/keys/delete_activation_keys/", {
         data: data,
       })
       .then((response) => {
@@ -122,7 +122,7 @@ function CsvUpload() {
     };
     setLoadingAcKeyUpdate(true);
     axios
-      .put("https://backend.osp.com.np/api/keys/edit-key/", data)
+      .put("https://osp.com.np/api/keys/edit-key/", data)
       .then((response) => {
         console.log(response);
         setAckresponse(response.data);
@@ -158,7 +158,7 @@ function CsvUpload() {
     formData.append("category", selectedCategory);
 
     axios
-      .post("https://backend.osp.com.np/api/keys/upload-csv/", formData, {
+      .post("https://osp.com.np/api/keys/upload-csv/", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
@@ -187,7 +187,7 @@ function CsvUpload() {
     const formData = new FormData();
     formData.append("file", ackfile);
     axios
-      .post("https://backend.osp.com.np/api/keys/upload-activation-keys/", formData, {
+      .post("https://osp.com.np/api/keys/upload-activation-keys/", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
@@ -207,7 +207,7 @@ function CsvUpload() {
 
   const fetchRecentlyUsedKeys = () => {
     axios
-      .get("https://backend.osp.com.np/api/keys/view_used_keys/")
+      .get("https://osp.com.np/api/keys/view_used_keys/")
       .then((response) => {
         setRecentlyUsedKeysResponse(response.data);
       })
@@ -218,7 +218,7 @@ function CsvUpload() {
 
   const fetchUnusedKeys = () => {
     axios
-      .get("https://backend.osp.com.np/api/keys/view_unused_keys/")
+      .get("https://osp.com.np/api/keys/view_unused_keys/")
       .then((response) => {
         setUnusedKeysResponse(response.data);
       })
