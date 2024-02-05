@@ -21,7 +21,7 @@ function AdminLogin() {
       setLoading(true);
       try {
         const response = await axios.post(
-          "https://osp.com.np/api/keys/login/",
+          "https://backend.osp.com.np/api/keys/login/",
           {
             username: user,
             password: pswd,
