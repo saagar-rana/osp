@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>eSewa Payment Integration Demo</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/crypto-js.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4edf5 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            padding: 30px 0;
+            margin-bottom: 30px;
+        }
+
+        header h1 {
+            font-size: 2.8rem;
+            color: #0d4a96;
+            margin-bottom: 10px;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        header p {
+            font-size: 1.2rem;
+            color: #666;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-size: 3rem;
+            color: #0d4a96;
+            margin-bottom: 20px;
+        }
+
+        .content {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .payment-form {
+            flex: 1;
+            min-width: 350px;
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+        }
+
+        .form-title {
+            font-size: 1.8rem;
+            color: #0d4a96;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #eaeaea;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #444;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 14px;
+            border: 2px solid #e1e5eb;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            border-color: #0d4a96;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(13, 74, 150, 0.1);
+        }
+
+        .amount-container {
+            display: flex;
+            gap: 15px;
+        }
+
+        .amount-container .form-group {
+            flex: 1;
+        }
+
+        .btn {
+            display: inline-block;
+            width: 100%;
+            padding: 16px;
+            background: #0d4a96;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .btn:hover {
+            background: #0a3a7a;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(13, 74, 150, 0.3);
+        }
+
+        .btn i {
+            margin-right: 10px;
+        }
+
+        .debug-info {
+            flex: 1;
+            min-width: 350px;
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+        }
+
+        .info-title {
+            font-size: 1.8rem;
+            color: #0d4a96;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #eaeaea;
+        }
+
+        .code-block {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            border-radius: 8px;
+            padding: 20px;
+            overflow-x: auto;
+            margin: 25px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 15px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .code-comment {
+            color: #75715e;
+        }
+
+        .code-tag {
+            color: #f92672;
+        }
+
+        .code-attr {
+            color: #a6e22e;
+        }
+
+        .code-value {
+            color: #e6db74;
+        }
+
+        .note {
+            background: #fff8e6;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            border-radius: 0 8px 8px 0;
+            margin: 25px 0;
+        }
+
+        .note-title {
+            font-weight: bold;
+            margin-bottom: 8px;
+            color: #856404;
+        }
+
+        .debug-output {
+            background: #f8f9fa;
+            border: 1px solid #e1e5eb;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+            white-space: pre-wrap;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .issue-list {
+            margin-top: 20px;
+        }
+
+        .issue {
+            padding: 15px;
+            background: #fff3f3;
+            border-left: 4px solid #e74c3c;
+            margin-bottom: 15px;
+            border-radius: 0 4px 4px 0;
+        }
+
+        .issue h3 {
+            color: #c0392b;
+            margin-bottom: 8px;
+        }
+
+        .solution {
+            padding: 15px;
+            background: #e8f5e9;
+            border-left: 4px solid #2ecc71;
+            margin-top: 15px;
+            border-radius: 0 4px 4px 0;
+        }
+
+        .solution h3 {
+            color: #27ae60;
+            margin-bottom: 8px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px 0;
+            color: #666;
+            font-size: 1rem;
+            border-top: 1px solid #eaeaea;
+            margin-top: 30px;
+        }
+
+        @media (max-width: 768px) {
+            .content {
+                flex-direction: column;
+            }
+
+            .amount-container {
+                flex-direction: column;
+                gap: 0;
+            }
+
+            header h1 {
+                font-size: 2.2rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <i class="fas fa-wallet"></i>
+            </div>
+            <h1>eSewa Payment Integration</h1>
+            <p>Debugging and implementation guide for eSewa payment gateway integration</p>
+        </header>
+
+        <div class="content">
+            <div class="payment-form">
+                <h2 class="form-title">Payment Details</h2>
+
+                <form id="esewaForm" method="POST" action="https://rc-epay.esewa.com.np/api/epay/main/v2/form">
+                    <div class="form-group">
+                        <label for="amount">Amount (NPR)</label>
+                        <input type="number" id="amount" name="amount" min="1" value="100" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="tax_amount">Tax Amount (NPR)</label>
+                        <input type="number" id="tax_amount" name="tax_amount" min="0" value="10" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="total_amount">Total Amount (NPR)</label>
+                        <input type="number" id="total_amount" name="total_amount" min="1" value="110" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="transaction_uuid">Transaction UUID</label>
+                        <input type="text" id="transaction_uuid" name="transaction_uuid" value="tx-123456" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="product_code">Product Code</label>
+                        <input type="text" id="product_code" name="product_code" value="EPAYTEST" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="product_service_charge">Service Charge (NPR)</label>
+                        <input type="number" id="product_service_charge" name="product_service_charge" min="0" value="0"
+                            required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="product_delivery_charge">Delivery Charge (NPR)</label>
+                        <input type="number" id="product_delivery_charge" name="product_delivery_charge" min="0"
+                            value="0" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="success_url">Success URL</label>
+                        <input type="url" id="success_url" name="success_url"
+                            value="https://your-domain.com/esewa-success" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="failure_url">Failure URL</label>
+                        <input type="url" id="failure_url" name="failure_url"
+                            value="https://your-domain.com/esewa-failure" required>
+                    </div>
+
+                    <input type="hidden" name="signed_field_names" value="total_amount,transaction_uuid,product_code">
+                    <input type="hidden" name="signature" id="signature" value="">
+
+                    <button type="button" class="btn" id="generateSignature">
+                        <i class="fas fa-key"></i> Generate Signature
+                    </button>
+
+                    <button type="submit" class="btn" id="payButton" disabled>
+                        <i class="fas fa-lock"></i> Pay with eSewa
+                    </button>
+                </form>
+            </div>
+
+            <div class="debug-info">
+                <h2 class="info-title">Debugging Information</h2>
+
+                <div class="issue">
+                    <h3>Common Issues with Your Implementation</h3>
+                    <p>Based on your code, here are the most likely problems:</p>
+                    <ol>
+                        <li>Signature generation using incorrect field values</li>
+                        <li>Missing or incorrect secret key</li>
+                        <li>Invalid success/failure URLs</li>
+                        <li>Auto-submission before signature generation</li>
+                        <li>Using an incorrect endpoint URL</li>
+                    </ol>
+                </div>
+
+                <div class="solution">
+                    <h3>Solution Approach</h3>
+                    <p>I've implemented these fixes in the demo:</p>
+                    <ul>
+                        <li>Separated signature generation and form submission</li>
+                        <li>Added validation for all fields</li>
+                        <li>Displayed signature generation process</li>
+                        <li>Used CryptoJS correctly for HMAC-SHA256</li>
+                        <li>Enabled manual form submission</li>
+                    </ul>
+                </div>
+
+                <h3>Signature Generation Process</h3>
+                <div class="debug-output" id="signatureProcess">
+                    // Signature generation will appear here
+                </div>
+
+                <h3>Form Payload</h3>
+                <div class="debug-output" id="formPayload">
+                    // Form data will appear here
+                </div>
+
+                <div class="note">
+                    <div class="note-title">Important Notes:</div>
+                    <p>- Use the testing environment (rc-epay.esewa.com.np) during development</p>
+                    <p>- Replace "EPAYTEST" with your actual merchant code in production</p>
+                    <p>- Implement proper validation and error handling</p>
+                    <p>- Always verify payment on your server using the eSewa API</p>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p>This is a demonstration only. No real transactions will be processed.</p>
+            <p>For official integration, refer to the <a href="https://developer.esewa.com.np" target="_blank">eSewa
+                    Developer Documentation</a></p>
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const form = document.getElementById('esewaForm');
+            const generateBtn = document.getElementById('generateSignature');
+            const payBtn = document.getElementById('payButton');
+            const signatureProcess = document.getElementById('signatureProcess');
+            const formPayload = document.getElementById('formPayload');
+
+            // UAT secret key (for testing only)
+            const secretKey = '8gBm/:&EnhH.1/q(';
+
+            // Update transaction UUID
+            document.getElementById('transaction_uuid').value = 'tx-' + Date.now();
+
+            // Update debug info
+            updateFormPayload();
+
+            generateBtn.addEventListener('click', () => {
+                // Get the signed field names
+                const signedFieldNames = form.elements['signed_field_names'].value.split(',');
+
+                // Create the data string to sign
+                let dataToSign = '';
+                signedFieldNames.forEach((field, index) => {
+                    const value = form.elements[field].value;
+                    dataToSign += value;
+                    if (index < signedFieldNames.length - 1) {
+                        dataToSign += ',';
+                    }
+                });
+
+                // Display signature generation process
+                signatureProcess.innerHTML = `
+<span class="code-comment">// Step 1: Data to sign (comma-separated values)</span>
+<span class="code-value">${dataToSign}</span>
+
+<span class="code-comment">// Step 2: Secret Key</span>
+<span class="code-value">${secretKey}</span>
+
+<span class="code-comment">// Step 3: Generate HMAC-SHA256 signature</span>`;
+
+                try {
+                    // Generate signature
+                    const hash = CryptoJS.HmacSHA256(dataToSign, secretKey);
+                    const signature = CryptoJS.enc.Base64.stringify(hash);
+
+                    // Display the signature
+                    signatureProcess.innerHTML += `
+<span class="code-comment">// Step 4: Base64-encoded signature</span>
+<span class="code-value">${signature}</span>`;
+
+                    // Set the signature value
+                    document.getElementById('signature').value = signature;
+
+                    // Enable the pay button
+                    payBtn.disabled = false;
+                    payBtn.innerHTML = '<i class="fas fa-lock"></i> Pay with eSewa';
+
+                    // Update form payload display
+                    updateFormPayload();
+
+                    // Show success message
+                    showMessage('Signature generated successfully!', 'success');
+                } catch (error) {
+                    signatureProcess.innerHTML += `
+<span class="code-comment">// Error occurred:</span>
+<span class="code-value">${error.message}</span>`;
+                    showMessage('Error generating signature: ' + error.message, 'error');
+                }
+            });
+
+            function updateFormPayload() {
+                const formData = new FormData(form);
+                let payload = '';
+
+                for (const [key, value] of formData.entries()) {
+                    payload +=
+                        `<span class="code-attr">${key}</span>: <span class="code-value">${value}</span>\n`;
+                }
+
+                formPayload.innerHTML = payload;
+            }
+
+            function showMessage(message, type) {
+                const messageBox = document.createElement('div');
+                messageBox.textContent = message;
+                messageBox.style.padding = '10px';
+                messageBox.style.margin = '10px 0';
+                messageBox.style.borderRadius = '4px';
+                messageBox.style.fontWeight = 'bold';
+
+                if (type === 'success') {
+                    messageBox.style.backgroundColor = '#d4edda';
+                    messageBox.style.color = '#155724';
+                    messageBox.style.border = '1px solid #c3e6cb';
+                } else {
+                    messageBox.style.backgroundColor = '#f8d7da';
+                    messageBox.style.color = '#721c24';
+                    messageBox.style.border = '1px solid #f5c6cb';
+                }
+
+                signatureProcess.parentNode.insertBefore(messageBox, signatureProcess.nextSibling);
+
+                // Auto-remove after 5 seconds
+                setTimeout(() => {
+                    messageBox.remove();
+                }, 5000);
+            }
+        });
+    </script>
+</body>
+
+</html>

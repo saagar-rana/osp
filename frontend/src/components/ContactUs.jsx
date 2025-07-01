@@ -67,7 +67,7 @@ function ContactUs() {
 
     try {
       const response = await axios.post(
-        "https://sagarrana12.com.np/api/keys/contact/",
+        "https://backend.osp.com.np/api/keys/contact/",
         formData
       );
       console.log("Contact Form sent successfully:", response.data);
